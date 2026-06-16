@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Brasa — Restaurante Premium</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       NAVEGACIÓN
+  ═══════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#inicio" class="nav-logo">
+        <span class="logo-ornament">✦</span>
+        La Brasa
+        <span class="logo-ornament">✦</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#historia" class="nav-link">Historia</a></li>
+        <li><a href="#carta" class="nav-link">Carta</a></li>
+        <li><a href="#galeria" class="nav-link">Galería</a></li>
+        <li><a href="#opiniones" class="nav-link">Opiniones</a></li>
+        <li><a href="#reservas" class="nav-link nav-cta">Reservar mesa</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=90"
+        alt="Plato principal La Brasa"
+        class="hero-img"
+        id="heroImg"
+      />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-deco"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Madrid · Desde 1998</p>
+      <h1 class="hero-title reveal">
+        El arte del<br /><em>fuego lento</em>
+      </h1>
+      <p class="hero-subtitle reveal">
+        Alta cocina a la brasa. Ingredientes de temporada,<br class="d-none-mobile" />
+        técnica impecable y una experiencia que perdura.
+      </p>
+      <div class="hero-actions reveal">
+        <a href="#reservas" class="btn btn-gold">Reservar mesa</a>
+        <a href="#carta" class="btn btn-ghost">Ver la carta</a>
+      </div>
+    </div>
+    <a href="#historia" class="hero-scroll" aria-label="Desplazarse hacia abajo">
+      <span class="scroll-line"></span>
+      <span class="scroll-text">Descubrir</span>
+    </a>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       STRIP DE DATOS
+  ═══════════════════════════════════════════ -->
+  <section class="strip">
+    <div class="strip-container">
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="26">0</span>
+        <span class="strip-label">Años de historia</span>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="3">0</span>
+        <span class="strip-label">Soles Repsol</span>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="48">0</span>
+        <span class="strip-label">Platos en carta</span>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="98">0</span>
+        <span class="strip-label">% de satisfacción</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       NUESTRA HISTORIA
+  ═══════════════════════════════════════════ -->
+  <section class="historia" id="historia">
+    <div class="historia-container">
+      <div class="historia-img-wrap reveal">
+        <img
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85"
+          alt="Interior del restaurante La Brasa"
+          class="historia-img"
+        />
+        <div class="historia-badge">
+          <span class="badge-year">1998</span>
+          <span class="badge-label">Fundado</span>
+        </div>
+      </div>
+      <div class="historia-text reveal">
+        <p class="section-eyebrow">Nuestra historia</p>
+        <h2 class="section-title">Pasión heredada,<br /><em>sabor eterno</em></h2>
+        <p class="historia-p">
+          Todo comenzó en 1998 cuando el chef Carlos Mendoza abrió las puertas de La Brasa
+          con una misión clara: rendir homenaje a la tradición de la parrilla con la
+          exigencia de la alta cocina contemporánea.
+        </p>
+        <p class="historia-p">
+          Hoy, más de dos décadas después, el legado continúa con la misma filosofía de
+          siempre: ingredientes de primera, fuego honesto y el tiempo justo. Nada más,
+          nada menos.
+        </p>
+        <div class="historia-firma">
+          <img
+            src="https://images.unsplash.com/photo-1583394293214-bf5a04bcc26a?w=120&q=80"
+            alt="Chef Carlos Mendoza"
+            class="firma-avatar"
+          />
+          <div>
+            <p class="firma-nombre">Carlos Mendoza</p>
+            <p class="firma-cargo">Chef ejecutivo & Fundador</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       CARTA
+  ═══════════════════════════════════════════ -->
+  <section class="carta" id="carta">
+    <div class="carta-header reveal">
+      <p class="section-eyebrow">Lo mejor del fuego</p>
+      <h2 class="section-title section-title--center">Nuestra <em>Carta</em></h2>
+      <p class="carta-intro">Ingredientes de temporada, productores locales y técnica en cada plato.</p>
+    </div>
+
+    <div class="carta-tabs reveal">
+      <button class="tab-btn active" data-tab="entrantes">Entrantes</button>
+      <button class="tab-btn" data-tab="principales">Principales</button>
+      <button class="tab-btn" data-tab="postres">Postres</button>
+      <button class="tab-btn" data-tab="vinos">Vinos</button>
+    </div>
+
+    <div class="carta-grid" id="cartaGrid"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       EXPERIENCIA — BANNER INTERMEDIO
+  ═══════════════════════════════════════════ -->
+  <section class="banner-mid">
+    <div class="banner-mid-bg">
+      <img
+        src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=85"
+        alt="Ambiente La Brasa"
+        class="banner-mid-img"
+      />
+      <div class="banner-mid-overlay"></div>
+    </div>
+    <div class="banner-mid-content reveal">
+      <p class="section-eyebrow">Una velada única</p>
+      <h2 class="banner-mid-title">Cada cena es<br /><em>una historia</em></h2>
+      <a href="#reservas" class="btn btn-gold">Reserva tu mesa</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       GALERÍA
+  ═══════════════════════════════════════════ -->
+  <section class="galeria" id="galeria">
+    <div class="galeria-header reveal">
+      <p class="section-eyebrow">Galería</p>
+      <h2 class="section-title section-title--center">Sabor <em>en imágenes</em></h2>
+    </div>
+    <div class="galeria-grid">
+      <div class="galeria-item galeria-item--large reveal">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=85" alt="Carne a la brasa" />
+        <div class="galeria-overlay"><span>Chuletón de buey</span></div>
+      </div>
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=85" alt="Pizza artesana" />
+        <div class="galeria-overlay"><span>Pan de masa madre</span></div>
+      </div>
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=600&q=85" alt="Pasta fresca" />
+        <div class="galeria-overlay"><span>Verduras de temporada</span></div>
+      </div>
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=85" alt="Hamburguesa premium" />
+        <div class="galeria-overlay"><span>Wagyu A5</span></div>
+      </div>
+      <div class="galeria-item galeria-item--tall reveal">
+        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=600&q=85" alt="Postre gourmet" />
+        <div class="galeria-overlay"><span>Tarta de queso ahumada</span></div>
+      </div>
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=600&q=85" alt="Cóctel artesano" />
+        <div class="galeria-overlay"><span>Cócteles de autor</span></div>
+      </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose">&#10005;</button>
+      <button class="lightbox-prev" id="lightboxPrev">&#8592;</button>
+      <button class="lightbox-next" id="lightboxNext">&#8594;</button>
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+      <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       OPINIONES
+  ═══════════════════════════════════════════ -->
+  <section class="opiniones" id="opiniones">
+    <div class="opiniones-header reveal">
+      <p class="section-eyebrow">Opiniones</p>
+      <h2 class="section-title section-title--center">Lo que dicen<br /><em>nuestros clientes</em></h2>
+    </div>
+    <div class="opiniones-track-wrap">
+      <div class="opiniones-track" id="opinionesTrack">
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Una experiencia gastronómica sin igual. El chuletón era perfecto al punto, y el servicio superó todas las expectativas. Volveremos sin duda."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80" alt="Laura M." />
+            <div>
+              <p class="opinion-name">Laura Martínez</p>
+              <p class="opinion-date">Marzo 2025 · Google</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"El mejor restaurante de Madrid sin discusión. La decoración es espectacular y cada plato es una obra de arte. El menú degustación, imprescindible."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80" alt="Carlos R." />
+            <div>
+              <p class="opinion-name">Carlos Romero</p>
+              <p class="opinion-date">Febrero 2025 · TripAdvisor</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Celebramos nuestro aniversario aquí y fue mágico. El equipo preparó una mesa especial y el sommelier eligió un vino extraordinario. Gracias por la noche perfecta."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80" alt="Ana G." />
+            <div>
+              <p class="opinion-name">Ana González</p>
+              <p class="opinion-date">Enero 2025 · Google</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Llevaba meses oyendo hablar de La Brasa y al final fui. Superó todas mis expectativas. El pulpo a la brasa y el postre de chocolate ahumado, memorables."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80" alt="Miguel A." />
+            <div>
+              <p class="opinion-name">Miguel Ángel Torres</p>
+              <p class="opinion-date">Diciembre 2024 · Yelp</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Somos foodies de toda la vida y pocos restaurantes nos han sorprendido así. La bodega es excepcional y los maridajes del chef, brillantes."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=80" alt="Sofía L." />
+            <div>
+              <p class="opinion-name">Sofía López</p>
+              <p class="opinion-date">Noviembre 2024 · Google</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button class="opiniones-btn opiniones-btn--prev" id="opPrev" aria-label="Anterior">&#8592;</button>
+      <button class="opiniones-btn opiniones-btn--next" id="opNext" aria-label="Siguiente">&#8594;</button>
+    </div>
+    <div class="opiniones-dots" id="opDots"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       RESERVAS
+  ═══════════════════════════════════════════ -->
+  <section class="reservas" id="reservas">
+    <div class="reservas-container">
+      <div class="reservas-info reveal">
+        <p class="section-eyebrow">Reserva tu mesa</p>
+        <h2 class="section-title">Una noche<br /><em>inolvidable</em></h2>
+        <p class="reservas-p">
+          Reserva con hasta 30 días de antelación. Para grupos de más de 10 personas
+          o eventos privados, llámanos directamente.
+        </p>
+        <ul class="reservas-datos">
+          <li>
+            <span class="dato-icon">📍</span>
+            <span>Calle del Fuego, 14 — Madrid, 28004</span>
+          </li>
+          <li>
+            <span class="dato-icon">📞</span>
+            <span>+34 91 456 78 90</span>
+          </li>
+          <li>
+            <span class="dato-icon">🕐</span>
+            <span>Mar–Dom · 13:30–16:00 y 20:30–00:00</span>
+          </li>
+          <li>
+            <span class="dato-icon">✉️</span>
+            <span>reservas@labrasa.es</span>
+          </li>
+        </ul>
+      </div>
+
+      <form class="reservas-form reveal" id="reservasForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+            <span class="form-error" id="err-nombre"></span>
+          </div>
+          <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+            <span class="form-error" id="err-email"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000" required />
+            <span class="form-error" id="err-telefono"></span>
+          </div>
+          <div class="form-group">
+            <label for="personas">Número de personas</label>
+            <select id="personas" name="personas" required>
+              <option value="" disabled selected>Seleccionar</option>
+              <option value="1">1 persona</option>
+              <option value="2">2 personas</option>
+              <option value="3">3 personas</option>
+              <option value="4">4 personas</option>
+              <option value="5">5 personas</option>
+              <option value="6">6 personas</option>
+              <option value="7">7 personas</option>
+              <option value="8">8 personas</option>
+              <option value="9+">9 o más</option>
+            </select>
+            <span class="form-error" id="err-personas"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="fecha" required />
+            <span class="form-error" id="err-fecha"></span>
+          </div>
+          <div class="form-group">
+            <label for="hora">Turno</label>
+            <select id="hora" name="hora" required>
+              <option value="" disabled selected>Seleccionar</option>
+              <option value="comida">Comida · 13:30</option>
+              <option value="cena">Cena · 20:30</option>
+              <option value="cena-tard">Cena tardía · 22:00</option>
+            </select>
+            <span class="form-error" id="err-hora"></span>
+          </div>
+        </div>
+        <div class="form-group form-group--full">
+          <label for="notas">Peticiones especiales (opcional)</label>
+          <textarea id="notas" name="notas" rows="3" placeholder="Alergias, celebraciones, preferencias de mesa..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-gold btn--submit">
+          <span class="btn-text">Confirmar reserva</span>
+          <span class="btn-spinner" id="btnSpinner"></span>
+        </button>
+        <div class="form-success" id="formSuccess">
+          <span>✦</span> ¡Reserva recibida! Nos pondremos en contacto en menos de 2 horas.
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <p class="footer-logo">
+          <span class="logo-ornament">✦</span> La Brasa <span class="logo-ornament">✦</span>
+        </p>
+        <p class="footer-tagline">Alta cocina a la brasa desde 1998</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="TripAdvisor" class="social-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-nav">
+        <h4 class="footer-title">Navegar</h4>
+        <ul>
+          <li><a href="#historia">Nuestra historia</a></li>
+          <li><a href="#carta">La carta</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#opiniones">Opiniones</a></li>
+          <li><a href="#reservas">Reservar mesa</a></li>
+        </ul>
+      </div>
+      <div class="footer-nav">
+        <h4 class="footer-title">Horario</h4>
+        <ul class="footer-hours">
+          <li><span>Lunes</span><span class="closed">Cerrado</span></li>
+          <li><span>Martes – Viernes</span><span>13:30 · 20:30</span></li>
+          <li><span>Sábado</span><span>13:30 · 23:00</span></li>
+          <li><span>Domingo</span><span>13:30 · 17:00</span></li>
+        </ul>
+      </div>
+      <div class="footer-nav">
+        <h4 class="footer-title">Contacto</h4>
+        <ul>
+          <li>Calle del Fuego, 14</li>
+          <li>Madrid, 28004</li>
+          <li><a href="tel:+34914567890">+34 91 456 78 90</a></li>
+          <li><a href="mailto:hola@labrasa.es">hola@labrasa.es</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 La Brasa · Todos los derechos reservados</p>
+      <p><a href="#">Aviso legal</a> · <a href="#">Política de privacidad</a> · <a href="#">Cookies</a></p>
+    </div>
+  </footer>
+
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
