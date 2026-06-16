@@ -1,2174 +1,472 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hotel Costa Azul — Lujo frente al mar</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --gold: #C9A96E;
-    --gold-light: #E8D5B0;
-    --gold-dark: #9B7A45;
-    --navy: #0D1B2A;
-    --navy-mid: #1A2F47;
-    --navy-light: #264060;
-    --cream: #FAF8F4;
-    --cream-dark: #F0EBE0;
-    --white: #FFFFFF;
-    --text-dark: #1A1A1A;
-    --text-mid: #4A4A4A;
-    --text-light: #888888;
-    --font-serif: 'Cormorant Garamond', Georgia, serif;
-    --font-sans: 'Montserrat', sans-serif;
-    --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; font-size: 16px; }
-
-  body {
-    font-family: var(--font-sans);
-    color: var(--text-dark);
-    background: var(--cream);
-    overflow-x: hidden;
-  }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--cream-dark); }
-  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-
-  /* ── NAVBAR ── */
-  .navbar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 1000;
-    padding: 1.5rem 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: var(--transition);
-  }
-  .navbar.scrolled {
-    background: rgba(13, 27, 42, 0.97);
-    padding: 1rem 4rem;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 2px 40px rgba(0,0,0,0.3);
-  }
-  .nav-logo {
-    display: flex;
-    flex-direction: column;
-    color: var(--white);
-    text-decoration: none;
-  }
-  .nav-logo span:first-child {
-    font-family: var(--font-serif);
-    font-size: 1.6rem;
-    font-weight: 300;
-    letter-spacing: 4px;
-    line-height: 1;
-  }
-  .nav-logo span:last-child {
-    font-size: 0.55rem;
-    letter-spacing: 5px;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-top: 2px;
-  }
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-  .nav-links a {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: var(--transition);
-    position: relative;
-  }
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -4px; left: 0;
-    width: 0; height: 1px;
-    background: var(--gold);
-    transition: var(--transition);
-  }
-  .nav-links a:hover { color: var(--gold); }
-  .nav-links a:hover::after { width: 100%; }
-  .nav-cta {
-    background: transparent;
-    color: var(--gold);
-    border: 1px solid var(--gold);
-    padding: 0.6rem 1.8rem;
-    font-family: var(--font-sans);
-    font-size: 0.65rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-  }
-  .nav-cta:hover {
-    background: var(--gold);
-    color: var(--navy);
-  }
-  .nav-hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    padding: 4px;
-  }
-  .nav-hamburger span {
-    width: 24px;
-    height: 1px;
-    background: var(--white);
-    transition: var(--transition);
-  }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    height: 100vh;
-    min-height: 700px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .hero-video {
-    position: absolute;
-    inset: 0;
-    width: 100%; height: 100%;
-    object-fit: cover;
-    z-index: 0;
-  }
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(13,27,42,0.35) 0%,
-      rgba(13,27,42,0.55) 50%,
-      rgba(13,27,42,0.8) 100%
-    );
-    z-index: 1;
-  }
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: var(--white);
-    padding: 0 2rem;
-    max-width: 900px;
-  }
-  .hero-eyebrow {
-    font-size: 0.65rem;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-    display: block;
-  }
-  .hero-title {
-    font-family: var(--font-serif);
-    font-size: clamp(3.5rem, 7vw, 6.5rem);
-    font-weight: 300;
-    line-height: 1.05;
-    margin-bottom: 1.5rem;
-    text-shadow: 0 2px 40px rgba(0,0,0,0.4);
-  }
-  .hero-title em { font-style: italic; color: var(--gold-light); }
-  .hero-subtitle {
-    font-size: 0.85rem;
-    letter-spacing: 1.5px;
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 3rem;
-    font-weight: 300;
-    line-height: 1.9;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .hero-buttons {
-    display: flex;
-    gap: 1.2rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn-primary {
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    padding: 1rem 2.8rem;
-    font-family: var(--font-sans);
-    font-size: 0.65rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-    display: inline-block;
-  }
-  .btn-primary:hover {
-    background: var(--gold-light);
-    transform: translateY(-2px);
-  }
-  .btn-outline-white {
-    background: transparent;
-    color: var(--white);
-    border: 1px solid rgba(255,255,255,0.5);
-    padding: 1rem 2.8rem;
-    font-family: var(--font-sans);
-    font-size: 0.65rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-    display: inline-block;
-  }
-  .btn-outline-white:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-  .hero-scroll {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: rgba(255,255,255,0.5);
-    font-size: 0.6rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    animation: bounce 2.5s ease-in-out infinite;
-  }
-  .hero-scroll-line {
-    width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-  }
-  @keyframes bounce {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(8px); }
-  }
-  .hero-stats {
-    position: absolute;
-    bottom: 4rem;
-    right: 5rem;
-    z-index: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-  .hero-stat {
-    text-align: right;
-    color: var(--white);
-  }
-  .hero-stat-num {
-    font-family: var(--font-serif);
-    font-size: 2.2rem;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-  }
-  .hero-stat-label {
-    font-size: 0.55rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-top: 2px;
-  }
-
-  /* ── SECTION COMMON ── */
-  section { padding: 7rem 0; }
-  .section-tag {
-    display: inline-block;
-    font-size: 0.6rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1rem;
-  }
-  .section-title {
-    font-family: var(--font-serif);
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
-    font-weight: 300;
-    line-height: 1.2;
-    color: var(--navy);
-  }
-  .section-title em { font-style: italic; }
-  .section-line {
-    width: 60px;
-    height: 1px;
-    background: var(--gold);
-    margin: 1.5rem 0;
-  }
-  .section-desc {
-    font-size: 0.88rem;
-    line-height: 1.9;
-    color: var(--text-mid);
-    max-width: 520px;
-  }
-  .container { max-width: 1300px; margin: 0 auto; padding: 0 3rem; }
-
-  /* ── BOOKING BAR ── */
-  .booking-bar {
-    background: var(--navy);
-    padding: 0;
-    position: relative;
-    z-index: 100;
-    margin-top: -2px;
-  }
-  .booking-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr auto auto;
-    align-items: stretch;
-  }
-  .booking-field {
-    padding: 1.5rem 2rem;
-    border-right: 1px solid rgba(255,255,255,0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-  .booking-field label {
-    font-size: 0.55rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-  }
-  .booking-field input,
-  .booking-field select {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--white);
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    cursor: pointer;
-    width: 100%;
-  }
-  .booking-field input::placeholder { color: rgba(255,255,255,0.4); }
-  .booking-field select option { background: var(--navy); color: var(--white); }
-  .booking-submit {
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    padding: 0 3rem;
-    font-family: var(--font-sans);
-    font-size: 0.65rem;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--transition);
-    white-space: nowrap;
-  }
-  .booking-submit:hover { background: var(--gold-light); }
-
-  /* ── EXPERIENCE ── */
-  .experience { background: var(--cream); }
-  .exp-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    min-height: 600px;
-  }
-  .exp-text {
-    padding: 5rem 5rem 5rem 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  .exp-features {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-top: 3rem;
-  }
-  .exp-feature {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-  .exp-feature-icon {
-    font-size: 1.4rem;
-    margin-bottom: 0.3rem;
-  }
-  .exp-feature-title {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--navy);
-  }
-  .exp-feature-desc {
-    font-size: 0.78rem;
-    color: var(--text-light);
-    line-height: 1.7;
-  }
-  .exp-image {
-    position: relative;
-    overflow: hidden;
-  }
-  .exp-image img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s ease;
-  }
-  .exp-image:hover img { transform: scale(1.04); }
-  .exp-image-badge {
-    position: absolute;
-    bottom: 2rem;
-    left: 2rem;
-    background: var(--navy);
-    color: var(--white);
-    padding: 1rem 1.5rem;
-  }
-  .exp-image-badge strong {
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: var(--gold);
-    display: block;
-    line-height: 1;
-  }
-  .exp-image-badge span {
-    font-size: 0.6rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.6);
-  }
-
-  /* ── ROOMS ── */
-  .rooms { background: var(--navy); }
-  .rooms .section-title { color: var(--white); }
-  .rooms-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 4rem;
-  }
-  .rooms-header-left .section-line { background: rgba(201,169,110,0.5); }
-  .rooms-nav {
-    display: flex;
-    gap: 0.5rem;
-  }
-  .rooms-nav-btn {
-    width: 44px; height: 44px;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    color: var(--white);
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .rooms-nav-btn:hover {
-    background: var(--gold);
-    border-color: var(--gold);
-    color: var(--navy);
-  }
-  .rooms-track-wrapper { overflow: hidden; }
-  .rooms-track {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
-    transition: var(--transition);
-  }
-  .room-card {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  .room-card-img {
-    width: 100%;
-    aspect-ratio: 3/4;
-    object-fit: cover;
-    transition: transform 0.8s ease;
-    display: block;
-  }
-  .room-card:hover .room-card-img { transform: scale(1.06); }
-  .room-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(13,27,42,0.95) 0%, rgba(13,27,42,0.3) 60%, transparent 100%);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    transition: var(--transition);
-  }
-  .room-card:hover .room-card-overlay {
-    background: linear-gradient(to top, rgba(13,27,42,0.98) 0%, rgba(13,27,42,0.6) 70%, rgba(13,27,42,0.2) 100%);
-  }
-  .room-type {
-    font-size: 0.55rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.5rem;
-  }
-  .room-name {
-    font-family: var(--font-serif);
-    font-size: 1.6rem;
-    font-weight: 300;
-    color: var(--white);
-    line-height: 1.2;
-    margin-bottom: 0.5rem;
-  }
-  .room-meta {
-    display: flex;
-    gap: 1.2rem;
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.55);
-    margin-bottom: 1rem;
-  }
-  .room-price {
-    display: flex;
-    align-items: baseline;
-    gap: 0.3rem;
-    margin-bottom: 1.2rem;
-  }
-  .room-price-from {
-    font-size: 0.6rem;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 1px;
-  }
-  .room-price-num {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 300;
-    color: var(--gold);
-    line-height: 1;
-  }
-  .room-price-night {
-    font-size: 0.6rem;
-    color: rgba(255,255,255,0.4);
-  }
-  .room-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.6rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-decoration: none;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: var(--transition);
-  }
-  .room-card:hover .room-btn {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  .room-btn-arrow { font-size: 0.9rem; }
-
-  /* ── SERVICES ── */
-  .services { background: var(--cream); }
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
-    margin-top: 4rem;
-  }
-  .service-card {
-    background: var(--white);
-    padding: 2.5rem 2rem;
-    text-align: center;
-    transition: var(--transition);
-    border-bottom: 3px solid transparent;
-    cursor: default;
-  }
-  .service-card:hover {
-    background: var(--navy);
-    border-bottom-color: var(--gold);
-    transform: translateY(-4px);
-  }
-  .service-icon {
-    font-size: 2.2rem;
-    margin-bottom: 1.2rem;
-    display: block;
-  }
-  .service-title {
-    font-family: var(--font-serif);
-    font-size: 1.2rem;
-    font-weight: 400;
-    color: var(--navy);
-    margin-bottom: 0.8rem;
-    transition: var(--transition);
-  }
-  .service-card:hover .service-title { color: var(--gold); }
-  .service-desc {
-    font-size: 0.78rem;
-    line-height: 1.8;
-    color: var(--text-light);
-    transition: var(--transition);
-  }
-  .service-card:hover .service-desc { color: rgba(255,255,255,0.6); }
-
-  /* ── SPA ── */
-  .spa {
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-  .spa-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-  .spa-bg img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-  }
-  .spa-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, rgba(13,27,42,0.95) 0%, rgba(13,27,42,0.7) 50%, rgba(13,27,42,0.15) 100%);
-    z-index: 1;
-  }
-  .spa-content {
-    position: relative;
-    z-index: 2;
-    max-width: 600px;
-    padding: 6rem 0;
-    color: var(--white);
-  }
-  .spa-content .section-title { color: var(--white); }
-  .spa-content .section-desc { color: rgba(255,255,255,0.7); max-width: 440px; }
-  .spa-treatments {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 2.5rem 0;
-  }
-  .spa-treatment {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.2rem;
-    background: rgba(255,255,255,0.06);
-    border-left: 2px solid var(--gold);
-    transition: var(--transition);
-    cursor: default;
-  }
-  .spa-treatment:hover {
-    background: rgba(201,169,110,0.12);
-    padding-left: 1.8rem;
-  }
-  .spa-treatment-icon { font-size: 1.4rem; }
-  .spa-treatment-name {
-    font-size: 0.8rem;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: var(--white);
-  }
-  .spa-treatment-time {
-    font-size: 0.7rem;
-    color: var(--gold);
-    margin-left: auto;
-    letter-spacing: 1px;
-  }
-
-  /* ── GALLERY ── */
-  .gallery { background: var(--navy); padding: 7rem 0 5rem; }
-  .gallery .section-title { color: var(--white); }
-  .gallery-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3rem;
-  }
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: auto;
-    gap: 4px;
-  }
-  .gallery-item {
-    overflow: hidden;
-    cursor: pointer;
-    position: relative;
-  }
-  .gallery-item img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s ease;
-    display: block;
-  }
-  .gallery-item:hover img { transform: scale(1.08); }
-  .gallery-item-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(13,27,42,0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-  }
-  .gallery-item:hover .gallery-item-overlay {
-    background: rgba(13,27,42,0.45);
-  }
-  .gallery-zoom {
-    color: var(--gold);
-    font-size: 1.8rem;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: var(--transition);
-  }
-  .gallery-item:hover .gallery-zoom {
-    opacity: 1;
-    transform: scale(1);
-  }
-  .gi-1 { grid-column: span 5; height: 320px; }
-  .gi-2 { grid-column: span 3; height: 320px; }
-  .gi-3 { grid-column: span 4; height: 320px; }
-  .gi-4 { grid-column: span 4; height: 280px; }
-  .gi-5 { grid-column: span 5; height: 280px; }
-  .gi-6 { grid-column: span 3; height: 280px; }
-
-  /* ── REVIEWS ── */
-  .reviews { background: var(--cream-dark); }
-  .reviews-header { text-align: center; margin-bottom: 4rem; }
-  .reviews-header .section-line { margin: 1.5rem auto; }
-  .stars {
-    display: flex;
-    gap: 3px;
-    justify-content: center;
-    margin-bottom: 1rem;
-    font-size: 0.9rem;
-    color: var(--gold);
-  }
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-  .review-card {
-    background: var(--white);
-    padding: 2.5rem;
-    position: relative;
-  }
-  .review-quote {
-    font-size: 4rem;
-    font-family: var(--font-serif);
-    color: var(--gold-light);
-    line-height: 0.6;
-    margin-bottom: 1rem;
-    display: block;
-  }
-  .review-text {
-    font-family: var(--font-serif);
-    font-size: 1rem;
-    font-style: italic;
-    line-height: 1.8;
-    color: var(--text-mid);
-    margin-bottom: 1.5rem;
-  }
-  .review-stars {
-    display: flex;
-    gap: 2px;
-    font-size: 0.8rem;
-    color: var(--gold);
-    margin-bottom: 1.2rem;
-  }
-  .review-author {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .review-avatar {
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--gold-light);
-  }
-  .review-avatar-initials {
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    background: var(--navy);
-    color: var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    border: 2px solid var(--gold-light);
-  }
-  .review-name {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    color: var(--navy);
-    text-transform: uppercase;
-  }
-  .review-origin {
-    font-size: 0.7rem;
-    color: var(--text-light);
-    margin-top: 1px;
-  }
-  .review-platform {
-    position: absolute;
-    top: 2rem; right: 2rem;
-    font-size: 0.6rem;
-    letter-spacing: 1.5px;
-    color: var(--text-light);
-    text-transform: uppercase;
-  }
-
-  /* ── MAP ── */
-  .location { background: var(--white); padding: 7rem 0 0; }
-  .location-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 500px;
-  }
-  .location-info {
-    padding: 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: var(--navy);
-    color: var(--white);
-  }
-  .location-info .section-title { color: var(--white); }
-  .location-info .section-desc { color: rgba(255,255,255,0.65); }
-  .location-details {
-    margin-top: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-  }
-  .location-detail {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    font-size: 0.82rem;
-  }
-  .location-detail-icon { font-size: 1.1rem; color: var(--gold); flex-shrink: 0; margin-top: 1px; }
-  .location-detail-label {
-    font-size: 0.6rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 2px;
-  }
-  .location-detail-value { color: rgba(255,255,255,0.8); line-height: 1.5; }
-  .location-map {
-    position: relative;
-  }
-  .map-iframe {
-    width: 100%;
-    height: 100%;
-    min-height: 500px;
-    border: none;
-    filter: grayscale(30%) contrast(1.1);
-  }
-
-  /* ── BOOKING SECTION ── */
-  .booking-section {
-    background: var(--cream);
-    padding: 7rem 0;
-  }
-  .booking-section-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-  }
-  .booking-section-text .section-desc { max-width: 400px; }
-  .booking-perks {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 2rem;
-  }
-  .booking-perk {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    font-size: 0.8rem;
-    color: var(--text-mid);
-  }
-  .booking-perk::before {
-    content: '✦';
-    color: var(--gold);
-    font-size: 0.7rem;
-  }
-  .booking-form {
-    background: var(--white);
-    padding: 3rem;
-    box-shadow: 0 20px 80px rgba(0,0,0,0.1);
-  }
-  .form-title {
-    font-family: var(--font-serif);
-    font-size: 1.8rem;
-    font-weight: 300;
-    color: var(--navy);
-    margin-bottom: 0.3rem;
-  }
-  .form-subtitle {
-    font-size: 0.72rem;
-    color: var(--text-light);
-    letter-spacing: 1px;
-    margin-bottom: 2rem;
-  }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    margin-bottom: 1rem;
-  }
-  .form-group label {
-    font-size: 0.6rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-light);
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    border: 1px solid var(--cream-dark);
-    background: var(--cream);
-    padding: 0.8rem 1rem;
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
-    color: var(--text-dark);
-    outline: none;
-    transition: var(--transition);
-    width: 100%;
-  }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--gold);
-    background: var(--white);
-  }
-  .form-group textarea { resize: vertical; min-height: 80px; }
-  .form-submit {
-    width: 100%;
-    background: var(--navy);
-    color: var(--white);
-    border: none;
-    padding: 1.1rem;
-    font-family: var(--font-sans);
-    font-size: 0.65rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--transition);
-    margin-top: 0.5rem;
-  }
-  .form-submit:hover { background: var(--gold); color: var(--navy); }
-  .form-note {
-    text-align: center;
-    font-size: 0.68rem;
-    color: var(--text-light);
-    margin-top: 1rem;
-  }
-
-  /* ── FOOTER ── */
-  .footer { background: var(--navy); color: var(--white); }
-  .footer-top {
-    padding: 5rem 0 4rem;
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 3rem;
-  }
-  .footer-brand-name {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 300;
-    letter-spacing: 4px;
-    color: var(--white);
-    display: block;
-  }
-  .footer-brand-sub {
-    font-size: 0.55rem;
-    letter-spacing: 5px;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-top: 3px;
-    margin-bottom: 1.5rem;
-    display: block;
-  }
-  .footer-brand-desc {
-    font-size: 0.8rem;
-    line-height: 1.9;
-    color: rgba(255,255,255,0.45);
-    max-width: 280px;
-    margin-bottom: 2rem;
-  }
-  .footer-social {
-    display: flex;
-    gap: 0.8rem;
-  }
-  .footer-social a {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(255,255,255,0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: rgba(255,255,255,0.5);
-    text-decoration: none;
-    font-size: 0.8rem;
-    transition: var(--transition);
-  }
-  .footer-social a:hover {
-    border-color: var(--gold);
-    color: var(--gold);
-    background: rgba(201,169,110,0.1);
-  }
-  .footer-col-title {
-    font-size: 0.6rem;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 1.5rem;
-  }
-  .footer-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-  }
-  .footer-links a {
-    color: rgba(255,255,255,0.45);
-    text-decoration: none;
-    font-size: 0.82rem;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .footer-links a:hover { color: var(--gold); padding-left: 4px; }
-  .footer-contact-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.8rem;
-    margin-bottom: 1rem;
-    font-size: 0.82rem;
-    color: rgba(255,255,255,0.45);
-    line-height: 1.6;
-  }
-  .footer-contact-icon { color: var(--gold); font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 1.5rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .footer-bottom-text {
-    font-size: 0.72rem;
-    color: rgba(255,255,255,0.25);
-  }
-  .footer-bottom-links {
-    display: flex;
-    gap: 2rem;
-  }
-  .footer-bottom-links a {
-    font-size: 0.68rem;
-    color: rgba(255,255,255,0.25);
-    text-decoration: none;
-    transition: var(--transition);
-  }
-  .footer-bottom-links a:hover { color: var(--gold); }
-  .footer-awards {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    margin-top: 1.5rem;
-  }
-  .footer-award {
-    text-align: center;
-  }
-  .footer-award-icon { font-size: 1.4rem; display: block; }
-  .footer-award-text {
-    font-size: 0.55rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.3);
-    margin-top: 3px;
-  }
-
-  /* ── LIGHTBOX ── */
-  .lightbox {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    z-index: 9999;
-    display: none;
-    align-items: center;
-    justify-content: center;
-  }
-  .lightbox.open { display: flex; }
-  .lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    object-fit: contain;
-  }
-  .lightbox-close {
-    position: absolute;
-    top: 2rem; right: 2rem;
-    color: var(--white);
-    font-size: 2rem;
-    cursor: pointer;
-    background: none;
-    border: none;
-    line-height: 1;
-    transition: var(--transition);
-  }
-  .lightbox-close:hover { color: var(--gold); }
-
-  /* ── FLOATING CTA ── */
-  .floating-cta {
-    position: fixed;
-    bottom: 2rem;
-    right: 2rem;
-    background: var(--gold);
-    color: var(--navy);
-    border: none;
-    padding: 0.9rem 1.8rem;
-    font-family: var(--font-sans);
-    font-size: 0.62rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: var(--transition);
-    z-index: 500;
-    box-shadow: 0 8px 32px rgba(201,169,110,0.4);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    transform: translateY(100px);
-    opacity: 0;
-  }
-  .floating-cta.visible {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  .floating-cta:hover {
-    background: var(--navy);
-    color: var(--gold);
-    border: 1px solid var(--gold);
-  }
-
-  /* ── MOBILE MENU ── */
-  .mobile-menu {
-    position: fixed;
-    inset: 0;
-    background: var(--navy);
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2.5rem;
-    transform: translateX(100%);
-    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-  }
-  .mobile-menu.open { transform: translateX(0); }
-  .mobile-menu a {
-    font-family: var(--font-serif);
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: var(--white);
-    text-decoration: none;
-    transition: var(--transition);
-    letter-spacing: 2px;
-  }
-  .mobile-menu a:hover { color: var(--gold); }
-  .mobile-menu-close {
-    position: absolute;
-    top: 1.5rem; right: 2rem;
-    background: none;
-    border: none;
-    color: var(--white);
-    font-size: 2rem;
-    cursor: pointer;
-    transition: var(--transition);
-  }
-  .mobile-menu-close:hover { color: var(--gold); }
-
-  /* ── ANIMATIONS ── */
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── POOL SECTION ── */
-  .pool {
-    background: var(--white);
-    padding: 0;
-  }
-  .pool-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 650px;
-  }
-  .pool-image {
-    overflow: hidden;
-  }
-  .pool-image img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.8s ease;
-  }
-  .pool-image:hover img { transform: scale(1.04); }
-  .pool-content {
-    padding: 5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: var(--cream);
-  }
-  .pool-amenities {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
-    margin-top: 2.5rem;
-  }
-  .pool-amenity {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-size: 0.8rem;
-    color: var(--text-mid);
-  }
-  .pool-amenity-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--gold);
-    flex-shrink: 0;
-  }
-
-  /* ── AWARDS BAR ── */
-  .awards-bar {
-    background: var(--cream-dark);
-    padding: 2.5rem 0;
-    border-top: 1px solid rgba(0,0,0,0.06);
-    border-bottom: 1px solid rgba(0,0,0,0.06);
-  }
-  .awards-bar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5rem;
-    flex-wrap: wrap;
-  }
-  .award-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .award-icon { font-size: 1.8rem; }
-  .award-text-main {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--navy);
-    letter-spacing: 1px;
-  }
-  .award-text-sub {
-    font-size: 0.62rem;
-    color: var(--text-light);
-    letter-spacing: 1px;
-  }
-  .award-divider {
-    width: 1px;
-    height: 32px;
-    background: rgba(0,0,0,0.12);
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1100px) {
-    .services-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-top { grid-template-columns: 1fr 1fr; }
-  }
-  @media (max-width: 900px) {
-    .navbar { padding: 1.2rem 2rem; }
-    .navbar.scrolled { padding: 1rem 2rem; }
-    .nav-links, .nav-cta { display: none; }
-    .nav-hamburger { display: flex; }
-    .exp-grid { grid-template-columns: 1fr; }
-    .exp-text { padding: 3rem 0; }
-    .rooms-track { grid-template-columns: 1fr 1fr; }
-    .pool-grid { grid-template-columns: 1fr; }
-    .pool-content { padding: 3rem 2rem; }
-    .location-grid { grid-template-columns: 1fr; }
-    .booking-section-inner { grid-template-columns: 1fr; }
-    .reviews-grid { grid-template-columns: 1fr; }
-    .hero-stats { display: none; }
-    .container { padding: 0 1.5rem; }
-    .booking-inner { grid-template-columns: 1fr 1fr; }
-    .gi-1, .gi-2, .gi-3, .gi-4, .gi-5, .gi-6 {
-      grid-column: span 6;
-      height: 220px;
-    }
-  }
-  @media (max-width: 600px) {
-    .hero-title { font-size: 2.8rem; }
-    .rooms-track { grid-template-columns: 1fr; }
-    .services-grid { grid-template-columns: 1fr; }
-    .booking-inner { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
-    .footer-top { grid-template-columns: 1fr; }
-    .awards-bar-inner { gap: 2rem; }
-    .award-divider { display: none; }
-    .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; }
-    .gi-1, .gi-2, .gi-3, .gi-4, .gi-5, .gi-6 {
-      grid-column: span 1;
-      height: 180px;
-    }
-    .pool-amenities { grid-template-columns: 1fr; }
-    .exp-features { grid-template-columns: 1fr; }
-    section { padding: 4rem 0; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Brasa — Restaurante Premium</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
-  <a href="#" class="nav-logo">
-    <span>Hotel Costa Azul</span>
-    <span>Lujo · Mar · Experiencia</span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#habitaciones">Habitaciones</a></li>
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#spa">Spa</a></li>
-    <li><a href="#galeria">Galería</a></li>
-    <li><a href="#ubicacion">Ubicación</a></li>
-    <li><a href="#opiniones">Opiniones</a></li>
-  </ul>
-  <a href="#reserva" class="nav-cta">Reservar ahora</a>
-  <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
+  <!-- ═══════════════════════════════════════════
+       NAVEGACIÓN
+  ═══════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#inicio" class="nav-logo">
+        <span class="logo-ornament">✦</span>
+        La Brasa
+        <span class="logo-ornament">✦</span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#historia" class="nav-link">Historia</a></li>
+        <li><a href="#carta" class="nav-link">Carta</a></li>
+        <li><a href="#galeria" class="nav-link">Galería</a></li>
+        <li><a href="#opiniones" class="nav-link">Opiniones</a></li>
+        <li><a href="#reservas" class="nav-link nav-cta">Reservar mesa</a></li>
+      </ul>
+    </div>
+  </nav>
 
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-menu-close" onclick="toggleMenu()">✕</button>
-  <a href="#habitaciones" onclick="toggleMenu()">Habitaciones</a>
-  <a href="#servicios" onclick="toggleMenu()">Servicios</a>
-  <a href="#spa" onclick="toggleMenu()">Spa</a>
-  <a href="#galeria" onclick="toggleMenu()">Galería</a>
-  <a href="#ubicacion" onclick="toggleMenu()">Ubicación</a>
-  <a href="#reserva" onclick="toggleMenu()">Reservar</a>
-</div>
+  <!-- ═══════════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════════ -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1920&q=90"
+        alt="Plato principal La Brasa"
+        class="hero-img"
+        id="heroImg"
+      />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-deco"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Madrid · Desde 1998</p>
+      <h1 class="hero-title reveal">
+        El arte del<br /><em>fuego lento</em>
+      </h1>
+      <p class="hero-subtitle reveal">
+        Alta cocina a la brasa. Ingredientes de temporada,<br class="d-none-mobile" />
+        técnica impecable y una experiencia que perdura.
+      </p>
+      <div class="hero-actions reveal">
+        <a href="#reservas" class="btn btn-gold">Reservar mesa</a>
+        <a href="#carta" class="btn btn-ghost">Ver la carta</a>
+      </div>
+    </div>
+    <a href="#historia" class="hero-scroll" aria-label="Desplazarse hacia abajo">
+      <span class="scroll-line"></span>
+      <span class="scroll-text">Descubrir</span>
+    </a>
+  </section>
 
-<!-- HERO -->
-<section class="hero" id="inicio">
-  <img
-    src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&q=85"
-    alt="Hotel Costa Azul vista aérea"
-    class="hero-video"
-    style="object-position: center 60%;"
-  >
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">⭐ Hotel 5 Estrellas — Costa Mediterránea</span>
-    <h1 class="hero-title">Donde el lujo<br>abraza el <em>mar</em></h1>
-    <p class="hero-subtitle">Una experiencia única frente al Mediterráneo. Suite con vista al infinito, gastronomía de autor y un spa que eleva el concepto de bienestar.</p>
-    <div class="hero-buttons">
-      <a href="#reserva" class="btn-primary">Reservar estancia</a>
-      <a href="#habitaciones" class="btn-outline-white">Explorar habitaciones</a>
+  <!-- ═══════════════════════════════════════════
+       STRIP DE DATOS
+  ═══════════════════════════════════════════ -->
+  <section class="strip">
+    <div class="strip-container">
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="26">0</span>
+        <span class="strip-label">Años de historia</span>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="3">0</span>
+        <span class="strip-label">Soles Repsol</span>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="48">0</span>
+        <span class="strip-label">Platos en carta</span>
+      </div>
+      <div class="strip-divider"></div>
+      <div class="strip-item reveal">
+        <span class="strip-num" data-target="98">0</span>
+        <span class="strip-label">% de satisfacción</span>
+      </div>
     </div>
-  </div>
-  <div class="hero-stats">
-    <div class="hero-stat">
-      <div class="hero-stat-num">24</div>
-      <div class="hero-stat-label">Años de excelencia</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">87</div>
-      <div class="hero-stat-label">Suites exclusivas</div>
-    </div>
-    <div class="hero-stat">
-      <div class="hero-stat-num">4.9</div>
-      <div class="hero-stat-label">Valoración media</div>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span>Descubrir</span>
-  </div>
-</section>
+  </section>
 
-<!-- BOOKING BAR -->
-<div class="booking-bar">
-  <div class="container">
-    <div class="booking-inner">
-      <div class="booking-field">
-        <label>Llegada</label>
-        <input type="date" id="checkin">
+  <!-- ═══════════════════════════════════════════
+       NUESTRA HISTORIA
+  ═══════════════════════════════════════════ -->
+  <section class="historia" id="historia">
+    <div class="historia-container">
+      <div class="historia-img-wrap reveal">
+        <img
+          src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85"
+          alt="Interior del restaurante La Brasa"
+          class="historia-img"
+        />
+        <div class="historia-badge">
+          <span class="badge-year">1998</span>
+          <span class="badge-label">Fundado</span>
+        </div>
       </div>
-      <div class="booking-field">
-        <label>Salida</label>
-        <input type="date" id="checkout">
-      </div>
-      <div class="booking-field">
-        <label>Huéspedes</label>
-        <select>
-          <option>1 adulto</option>
-          <option>2 adultos</option>
-          <option>2 adultos, 1 niño</option>
-          <option>2 adultos, 2 niños</option>
-        </select>
-      </div>
-      <div class="booking-field">
-        <label>Tipo de habitación</label>
-        <select>
-          <option>Cualquier habitación</option>
-          <option>Suite Mediterránea</option>
-          <option>Suite Panorámica</option>
-          <option>Royal Suite</option>
-        </select>
-      </div>
-      <button class="booking-submit" onclick="scrollToReserva()">Verificar disponibilidad</button>
-    </div>
-  </div>
-</div>
-
-<!-- AWARDS BAR -->
-<div class="awards-bar">
-  <div class="awards-bar-inner">
-    <div class="award-item">
-      <span class="award-icon">🏆</span>
-      <div>
-        <div class="award-text-main">World Travel Awards</div>
-        <div class="award-text-sub">Mejor Hotel de Lujo 2024</div>
-      </div>
-    </div>
-    <div class="award-divider"></div>
-    <div class="award-item">
-      <span class="award-icon">⭐</span>
-      <div>
-        <div class="award-text-main">Forbes Five-Star</div>
-        <div class="award-text-sub">Certificado desde 2018</div>
-      </div>
-    </div>
-    <div class="award-divider"></div>
-    <div class="award-item">
-      <span class="award-icon">🌿</span>
-      <div>
-        <div class="award-text-main">Green Globe</div>
-        <div class="award-text-sub">Sostenibilidad Platinum</div>
-      </div>
-    </div>
-    <div class="award-divider"></div>
-    <div class="award-item">
-      <span class="award-icon">🍴</span>
-      <div>
-        <div class="award-text-main">Guía Michelin</div>
-        <div class="award-text-sub">Restaurante Recomendado</div>
-      </div>
-    </div>
-    <div class="award-divider"></div>
-    <div class="award-item">
-      <span class="award-icon">💎</span>
-      <div>
-        <div class="award-text-main">Condé Nast</div>
-        <div class="award-text-sub">Top 10 Hoteles España</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- EXPERIENCE -->
-<section class="experience">
-  <div class="container">
-    <div class="exp-grid">
-      <div class="exp-text reveal">
-        <span class="section-tag">Nuestra esencia</span>
-        <h2 class="section-title">Una experiencia<br>que trasciende<br>lo <em>ordinario</em></h2>
-        <div class="section-line"></div>
-        <p class="section-desc">Hotel Costa Azul es más que un hotel. Es un refugio donde cada detalle ha sido concebido para elevar los sentidos. Desde la arquitectura mediterránea hasta la gastronomía de vanguardia, cada momento se convierte en un recuerdo imperecedero.</p>
-        <div class="exp-features">
-          <div class="exp-feature">
-            <span class="exp-feature-icon">🌊</span>
-            <div class="exp-feature-title">Vista al mar</div>
-            <div class="exp-feature-desc">100% de habitaciones con vistas privilegiadas al Mediterráneo</div>
-          </div>
-          <div class="exp-feature">
-            <span class="exp-feature-icon">👨‍🍳</span>
-            <div class="exp-feature-title">Alta cocina</div>
-            <div class="exp-feature-desc">Restaurante con chef ejecutivo galardonado</div>
-          </div>
-          <div class="exp-feature">
-            <span class="exp-feature-icon">🛎️</span>
-            <div class="exp-feature-title">Servicio 24/7</div>
-            <div class="exp-feature-desc">Mayordomo personal disponible a cualquier hora</div>
-          </div>
-          <div class="exp-feature">
-            <span class="exp-feature-icon">🚤</span>
-            <div class="exp-feature-title">Club náutico</div>
-            <div class="exp-feature-desc">Excursiones privadas en velero y yate de lujo</div>
+      <div class="historia-text reveal">
+        <p class="section-eyebrow">Nuestra historia</p>
+        <h2 class="section-title">Pasión heredada,<br /><em>sabor eterno</em></h2>
+        <p class="historia-p">
+          Todo comenzó en 1998 cuando el chef Carlos Mendoza abrió las puertas de La Brasa
+          con una misión clara: rendir homenaje a la tradición de la parrilla con la
+          exigencia de la alta cocina contemporánea.
+        </p>
+        <p class="historia-p">
+          Hoy, más de dos décadas después, el legado continúa con la misma filosofía de
+          siempre: ingredientes de primera, fuego honesto y el tiempo justo. Nada más,
+          nada menos.
+        </p>
+        <div class="historia-firma">
+          <img
+            src="https://images.unsplash.com/photo-1583394293214-bf5a04bcc26a?w=120&q=80"
+            alt="Chef Carlos Mendoza"
+            class="firma-avatar"
+          />
+          <div>
+            <p class="firma-nombre">Carlos Mendoza</p>
+            <p class="firma-cargo">Chef ejecutivo & Fundador</p>
           </div>
         </div>
       </div>
-      <div class="exp-image reveal">
-        <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=900&q=85" alt="Interior lujoso del hotel">
-        <div class="exp-image-badge">
-          <strong>5★</strong>
-          <span>Clasificación oficial</span>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ROOMS -->
-<section class="rooms" id="habitaciones">
-  <div class="container">
-    <div class="rooms-header">
-      <div class="rooms-header-left">
-        <span class="section-tag">Alojamiento</span>
-        <h2 class="section-title">Nuestras <em>suites</em></h2>
-        <div class="section-line"></div>
+  <!-- ═══════════════════════════════════════════
+       CARTA
+  ═══════════════════════════════════════════ -->
+  <section class="carta" id="carta">
+    <div class="carta-header reveal">
+      <p class="section-eyebrow">Lo mejor del fuego</p>
+      <h2 class="section-title section-title--center">Nuestra <em>Carta</em></h2>
+      <p class="carta-intro">Ingredientes de temporada, productores locales y técnica en cada plato.</p>
+    </div>
+
+    <div class="carta-tabs reveal">
+      <button class="tab-btn active" data-tab="entrantes">Entrantes</button>
+      <button class="tab-btn" data-tab="principales">Principales</button>
+      <button class="tab-btn" data-tab="postres">Postres</button>
+      <button class="tab-btn" data-tab="vinos">Vinos</button>
+    </div>
+
+    <div class="carta-grid" id="cartaGrid"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       EXPERIENCIA — BANNER INTERMEDIO
+  ═══════════════════════════════════════════ -->
+  <section class="banner-mid">
+    <div class="banner-mid-bg">
+      <img
+        src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=85"
+        alt="Ambiente La Brasa"
+        class="banner-mid-img"
+      />
+      <div class="banner-mid-overlay"></div>
+    </div>
+    <div class="banner-mid-content reveal">
+      <p class="section-eyebrow">Una velada única</p>
+      <h2 class="banner-mid-title">Cada cena es<br /><em>una historia</em></h2>
+      <a href="#reservas" class="btn btn-gold">Reserva tu mesa</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       GALERÍA
+  ═══════════════════════════════════════════ -->
+  <section class="galeria" id="galeria">
+    <div class="galeria-header reveal">
+      <p class="section-eyebrow">Galería</p>
+      <h2 class="section-title section-title--center">Sabor <em>en imágenes</em></h2>
+    </div>
+    <div class="galeria-grid">
+      <!-- Chuletón a la brasa con hueso — imagen grande -->
+      <div class="galeria-item galeria-item--large reveal">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=900&q=85" alt="Chuletón de buey a la brasa" />
+        <div class="galeria-overlay"><span>Chuletón de buey gallego</span></div>
       </div>
-      <div class="rooms-nav">
-        <button class="rooms-nav-btn" onclick="scrollRooms(-1)">←</button>
-        <button class="rooms-nav-btn" onclick="scrollRooms(1)">→</button>
+      <!-- Pan de masa madre artesano -->
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&q=85" alt="Pan de masa madre" />
+        <div class="galeria-overlay"><span>Pan de masa madre</span></div>
+      </div>
+      <!-- Verduras de temporada asadas -->
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?w=600&q=85" alt="Verduras de temporada" />
+        <div class="galeria-overlay"><span>Verduras de temporada</span></div>
+      </div>
+      <!-- Wagyu A5 — filete premium -->
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1558030137-a56c1b004fa0?w=600&q=85" alt="Solomillo Wagyu A5" />
+        <div class="galeria-overlay"><span>Wagyu A5</span></div>
+      </div>
+      <!-- Tarta de queso — imagen alta -->
+      <div class="galeria-item galeria-item--tall reveal">
+        <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=600&q=85" alt="Tarta de queso ahumada" />
+        <div class="galeria-overlay"><span>Tarta de queso ahumada</span></div>
+      </div>
+      <!-- Cócteles de autor -->
+      <div class="galeria-item reveal">
+        <img src="https://images.unsplash.com/photo-1547595628-c61a29f496f0?w=600&q=85" alt="Cócteles de autor" />
+        <div class="galeria-overlay"><span>Cócteles de autor</span></div>
       </div>
     </div>
-    <div class="rooms-track-wrapper">
-      <div class="rooms-track" id="roomsTrack">
-        <div class="room-card reveal">
-          <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=700&q=85" alt="Suite Mediterránea" class="room-card-img">
-          <div class="room-card-overlay">
-            <span class="room-type">Suite Clásica</span>
-            <h3 class="room-name">Suite<br>Mediterránea</h3>
-            <div class="room-meta">
-              <span>52 m²</span>
-              <span>·</span>
-              <span>Vista al mar</span>
-              <span>·</span>
-              <span>Terraza privada</span>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+      <button class="lightbox-close" id="lightboxClose">&#10005;</button>
+      <button class="lightbox-prev" id="lightboxPrev">&#8592;</button>
+      <button class="lightbox-next" id="lightboxNext">&#8594;</button>
+      <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+      <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       OPINIONES
+  ═══════════════════════════════════════════ -->
+  <section class="opiniones" id="opiniones">
+    <div class="opiniones-header reveal">
+      <p class="section-eyebrow">Opiniones</p>
+      <h2 class="section-title section-title--center">Lo que dicen<br /><em>nuestros clientes</em></h2>
+    </div>
+    <div class="opiniones-track-wrap">
+      <div class="opiniones-track" id="opinionesTrack">
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Una experiencia gastronómica sin igual. El chuletón era perfecto al punto, y el servicio superó todas las expectativas. Volveremos sin duda."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80" alt="Laura M." />
+            <div>
+              <p class="opinion-name">Laura Martínez</p>
+              <p class="opinion-date">Marzo 2025 · Google</p>
             </div>
-            <div class="room-price">
-              <span class="room-price-from">desde</span>
-              <span class="room-price-num">€480</span>
-              <span class="room-price-night">/noche</span>
+          </div>
+        </div>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"El mejor restaurante de Madrid sin discusión. La decoración es espectacular y cada plato es una obra de arte. El menú degustación, imprescindible."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80" alt="Carlos R." />
+            <div>
+              <p class="opinion-name">Carlos Romero</p>
+              <p class="opinion-date">Febrero 2025 · TripAdvisor</p>
             </div>
-            <a href="#reserva" class="room-btn">Reservar suite <span class="room-btn-arrow">→</span></a>
           </div>
         </div>
-        <div class="room-card reveal">
-          <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=700&q=85" alt="Suite Panorámica" class="room-card-img">
-          <div class="room-card-overlay">
-            <span class="room-type">Suite Premium</span>
-            <h3 class="room-name">Suite<br>Panorámica</h3>
-            <div class="room-meta">
-              <span>78 m²</span>
-              <span>·</span>
-              <span>Vista 180°</span>
-              <span>·</span>
-              <span>Jacuzzi exterior</span>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Celebramos nuestro aniversario aquí y fue mágico. El equipo preparó una mesa especial y el sommelier eligió un vino extraordinario. Gracias por la noche perfecta."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80" alt="Ana G." />
+            <div>
+              <p class="opinion-name">Ana González</p>
+              <p class="opinion-date">Enero 2025 · Google</p>
             </div>
-            <div class="room-price">
-              <span class="room-price-from">desde</span>
-              <span class="room-price-num">€720</span>
-              <span class="room-price-night">/noche</span>
+          </div>
+        </div>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Llevaba meses oyendo hablar de La Brasa y al final fui. Superó todas mis expectativas. El pulpo a la brasa y el postre de chocolate ahumado, memorables."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80" alt="Miguel A." />
+            <div>
+              <p class="opinion-name">Miguel Ángel Torres</p>
+              <p class="opinion-date">Diciembre 2024 · Yelp</p>
             </div>
-            <a href="#reserva" class="room-btn">Reservar suite <span class="room-btn-arrow">→</span></a>
           </div>
         </div>
-        <div class="room-card reveal">
-          <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=700&q=85" alt="Royal Suite" class="room-card-img">
-          <div class="room-card-overlay">
-            <span class="room-type">Suite Excellence</span>
-            <h3 class="room-name">Royal<br>Suite</h3>
-            <div class="room-meta">
-              <span>140 m²</span>
-              <span>·</span>
-              <span>Planta exclusiva</span>
-              <span>·</span>
-              <span>Piscina privada</span>
+
+        <div class="opinion-card">
+          <div class="opinion-stars">★★★★★</div>
+          <p class="opinion-text">"Somos foodies de toda la vida y pocos restaurantes nos han sorprendido así. La bodega es excepcional y los maridajes del chef, brillantes."</p>
+          <div class="opinion-author">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&q=80" alt="Sofía L." />
+            <div>
+              <p class="opinion-name">Sofía López</p>
+              <p class="opinion-date">Noviembre 2024 · Google</p>
             </div>
-            <div class="room-price">
-              <span class="room-price-from">desde</span>
-              <span class="room-price-num">€1.890</span>
-              <span class="room-price-night">/noche</span>
-            </div>
-            <a href="#reserva" class="room-btn">Reservar suite <span class="room-btn-arrow">→</span></a>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- SERVICES -->
-<section class="services" id="servicios">
-  <div class="container">
-    <div style="text-align: center; max-width: 600px; margin: 0 auto;" class="reveal">
-      <span class="section-tag">Lo que ofrecemos</span>
-      <h2 class="section-title">Servicios <em>exclusivos</em></h2>
-      <div class="section-line" style="margin: 1.5rem auto;"></div>
-      <p class="section-desc" style="margin: 0 auto; text-align: center;">Cada servicio ha sido diseñado para anticiparse a sus deseos y superar cualquier expectativa.</p>
+      </div>
+      <button class="opiniones-btn opiniones-btn--prev" id="opPrev" aria-label="Anterior">&#8592;</button>
+      <button class="opiniones-btn opiniones-btn--next" id="opNext" aria-label="Siguiente">&#8594;</button>
     </div>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <span class="service-icon">🍽️</span>
-        <h3 class="service-title">Restaurante Gastronómico</h3>
-        <p class="service-desc">Cocina de autor con ingredientes locales de temporada. Carta de vinos con más de 400 referencias.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">🏊</span>
-        <h3 class="service-title">Piscinas Infinitas</h3>
-        <p class="service-desc">Tres piscinas de borde infinito con vistas panorámicas al Mediterráneo. Servicio de cabana incluido.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">💆</span>
-        <h3 class="service-title">Spa & Wellness</h3>
-        <p class="service-desc">2.500 m² de bienestar con tratamientos exclusivos, hammam, sauna y rituales de belleza premium.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">🏋️</span>
-        <h3 class="service-title">Fitness Premium</h3>
-        <p class="service-desc">Gimnasio equipado con tecnología de última generación y entrenadores personales certificados.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">🚗</span>
-        <h3 class="service-title">Chófer & Transfer</h3>
-        <p class="service-desc">Flota de vehículos de lujo con conductores profesionales disponibles las 24 horas.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">🎾</span>
-        <h3 class="service-title">Club Deportivo</h3>
-        <p class="service-desc">Canchas de tenis, paddle y golf en campo próximo. Clases con instructores profesionales.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">👶</span>
-        <h3 class="service-title">Kids Club</h3>
-        <p class="service-desc">Programa de actividades supervisado para los más pequeños mientras los adultos descansan.</p>
-      </div>
-      <div class="service-card reveal">
-        <span class="service-icon">🎪</span>
-        <h3 class="service-title">Eventos & Bodas</h3>
-        <p class="service-desc">Espacios únicos para celebraciones privadas, congresos y eventos empresariales de lujo.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <div class="opiniones-dots" id="opDots"></div>
+  </section>
 
-<!-- POOL & SPA -->
-<section class="pool" id="piscina">
-  <div class="pool-grid">
-    <div class="pool-image reveal">
-      <img src="https://images.unsplash.com/photo-1540541338537-3f23a3e27ef0?w=900&q=85" alt="Piscina infinita Hotel Costa Azul">
-    </div>
-    <div class="pool-content reveal">
-      <span class="section-tag">Piscinas & Wellness</span>
-      <h2 class="section-title">El infinito <em>azul</em><br>a sus pies</h2>
-      <div class="section-line"></div>
-      <p class="section-desc">Tres piscinas diseñadas para fundirse con el horizonte mediterráneo. La temperatura perfecta, el silencio necesario y el servicio que se anticipa a cada deseo.</p>
-      <div class="pool-amenities">
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Piscina principal 40m</div>
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Piscina climatizada</div>
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Pool bar gourmet</div>
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Servicio de tumbonas</div>
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Jacuzzi con vistas</div>
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Pool exclusivo adultos</div>
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Cabanas privadas</div>
-        <div class="pool-amenity"><div class="pool-amenity-dot"></div>Animación diurna</div>
+  <!-- ═══════════════════════════════════════════
+       RESERVAS
+  ═══════════════════════════════════════════ -->
+  <section class="reservas" id="reservas">
+    <div class="reservas-container">
+      <div class="reservas-info reveal">
+        <p class="section-eyebrow">Reserva tu mesa</p>
+        <h2 class="section-title">Una noche<br /><em>inolvidable</em></h2>
+        <p class="reservas-p">
+          Reserva con hasta 30 días de antelación. Para grupos de más de 10 personas
+          o eventos privados, llámanos directamente.
+        </p>
+        <ul class="reservas-datos">
+          <li>
+            <span class="dato-icon">📍</span>
+            <span>Calle del Fuego, 14 — Madrid, 28004</span>
+          </li>
+          <li>
+            <span class="dato-icon">📞</span>
+            <span>+34 91 456 78 90</span>
+          </li>
+          <li>
+            <span class="dato-icon">🕐</span>
+            <span>Mar–Dom · 13:30–16:00 y 20:30–00:00</span>
+          </li>
+          <li>
+            <span class="dato-icon">✉️</span>
+            <span>reservas@labrasa.es</span>
+          </li>
+        </ul>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- SPA -->
-<section class="spa" id="spa">
-  <div class="spa-bg">
-    <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1920&q=85" alt="Spa Hotel Costa Azul">
-  </div>
-  <div class="spa-overlay"></div>
-  <div class="container">
-    <div class="spa-content reveal">
-      <span class="section-tag">Azure Spa</span>
-      <h2 class="section-title">El arte de<br>la <em>restauración</em></h2>
-      <div class="section-line"></div>
-      <p class="section-desc">Nuestro spa de 2.500 m² es un santuario donde el tiempo se detiene. Rituales ancestrales fusionados con tecnología de vanguardia en un entorno de absoluta serenidad.</p>
-      <div class="spa-treatments">
-        <div class="spa-treatment">
-          <span class="spa-treatment-icon">🌺</span>
-          <span class="spa-treatment-name">Ritual Mediterráneo Completo</span>
-          <span class="spa-treatment-time">120 min</span>
-        </div>
-        <div class="spa-treatment">
-          <span class="spa-treatment-icon">💎</span>
-          <span class="spa-treatment-name">Diamante Facial Renewal</span>
-          <span class="spa-treatment-time">90 min</span>
-        </div>
-        <div class="spa-treatment">
-          <span class="spa-treatment-icon">🪨</span>
-          <span class="spa-treatment-name">Hot Stone Therapy</span>
-          <span class="spa-treatment-time">75 min</span>
-        </div>
-        <div class="spa-treatment">
-          <span class="spa-treatment-icon">🌿</span>
-          <span class="spa-treatment-name">Aromaterapia & Flotación</span>
-          <span class="spa-treatment-time">60 min</span>
-        </div>
-      </div>
-      <a href="#reserva" class="btn-primary">Reservar tratamiento</a>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY -->
-<section class="gallery" id="galeria">
-  <div class="container">
-    <div class="gallery-header reveal">
-      <div>
-        <span class="section-tag">Galería</span>
-        <h2 class="section-title" style="color: var(--white);">Momentos que<br><em>inspiran</em></h2>
-        <div class="section-line" style="background: var(--gold);"></div>
-      </div>
-      <p style="color: rgba(255,255,255,0.45); font-size: 0.78rem; max-width: 240px; line-height: 1.8; text-align: right;">Cada rincón del hotel es una obra de arte esperando ser descubierta</p>
-    </div>
-    <div class="gallery-grid">
-      <div class="gallery-item gi-1" onclick="openLightbox(this.querySelector('img').src)">
-        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80" alt="Terraza del hotel">
-        <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-      </div>
-      <div class="gallery-item gi-2" onclick="openLightbox(this.querySelector('img').src)">
-        <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=600&q=80" alt="Suite de lujo">
-        <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-      </div>
-      <div class="gallery-item gi-3" onclick="openLightbox(this.querySelector('img').src)">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80" alt="Restaurante gourmet">
-        <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-      </div>
-      <div class="gallery-item gi-4" onclick="openLightbox(this.querySelector('img').src)">
-        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=700&q=80" alt="Lobby del hotel">
-        <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-      </div>
-      <div class="gallery-item gi-5" onclick="openLightbox(this.querySelector('img').src)">
-        <img src="https://images.unsplash.com/photo-1561501878-aabd62634533?w=800&q=80" alt="Piscina infinita">
-        <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-      </div>
-      <div class="gallery-item gi-6" onclick="openLightbox(this.querySelector('img').src)">
-        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&q=80" alt="Baño de suite">
-        <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section class="reviews" id="opiniones">
-  <div class="container">
-    <div class="reviews-header reveal">
-      <span class="section-tag">Opiniones verificadas</span>
-      <h2 class="section-title">Lo que dicen<br>nuestros <em>huéspedes</em></h2>
-      <div class="section-line"></div>
-      <div class="stars">★★★★★</div>
-      <p style="font-size: 0.78rem; color: var(--text-light);">4.9/5 basado en 2.847 reseñas verificadas</p>
-    </div>
-    <div class="reviews-grid">
-      <div class="review-card reveal">
-        <span class="review-platform">TripAdvisor</span>
-        <span class="review-quote">"</span>
-        <p class="review-text">Una experiencia absolutamente sublime. El servicio es de otro nivel: anticiparon cada necesidad antes de que lo pidiésemos. La suite panorámica con el amanecer sobre el Mediterráneo es algo que no olvidaré jamás.</p>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-author">
-          <div class="review-avatar-initials">SM</div>
-          <div>
-            <div class="review-name">Sofía Martínez</div>
-            <div class="review-origin">Madrid, España · 3 noches</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card reveal">
-        <span class="review-platform">Google</span>
-        <span class="review-quote">"</span>
-        <p class="review-text">Llevamos años viajando a hoteles de lujo por todo el mundo y Hotel Costa Azul está definitivamente entre los cinco mejores. El spa es extraordinario y la gastronomía, simplemente magistral.</p>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-author">
-          <div class="review-avatar-initials">JL</div>
-          <div>
-            <div class="review-name">James & Laura</div>
-            <div class="review-origin">London, UK · 7 noches</div>
-          </div>
-        </div>
-      </div>
-      <div class="review-card reveal">
-        <span class="review-platform">Booking.com</span>
-        <span class="review-quote">"</span>
-        <p class="review-text">Celebramos nuestro aniversario de bodas y el hotel lo convirtió en algo mágico. Champagne en la habitación, pétalos de rosa, cena privada en la terraza... un detalle tras otro. Volveremos sin duda.</p>
-        <div class="review-stars">★★★★★</div>
-        <div class="review-author">
-          <div class="review-avatar-initials">CP</div>
-          <div>
-            <div class="review-name">Carlos & Pilar</div>
-            <div class="review-origin">Barcelona, España · 5 noches</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- LOCATION -->
-<section class="location" id="ubicacion">
-  <div class="location-grid">
-    <div class="location-info reveal">
-      <span class="section-tag">Dónde estamos</span>
-      <h2 class="section-title">En el corazón<br>de la <em>costa</em></h2>
-      <div class="section-line" style="background: var(--gold);"></div>
-      <p class="section-desc" style="color: rgba(255,255,255,0.65); max-width: 380px;">Ubicados en primera línea de playa, a tan solo 20 minutos del aeropuerto y con acceso directo al casco histórico de la ciudad.</p>
-      <div class="location-details">
-        <div class="location-detail">
-          <span class="location-detail-icon">📍</span>
-          <div>
-            <div class="location-detail-label">Dirección</div>
-            <div class="location-detail-value">Paseo Marítimo, 142<br>Marbella, 29600 Málaga</div>
-          </div>
-        </div>
-        <div class="location-detail">
-          <span class="location-detail-icon">✈️</span>
-          <div>
-            <div class="location-detail-label">Aeropuerto</div>
-            <div class="location-detail-value">AGP Málaga-Costa del Sol<br>20 min en vehículo</div>
-          </div>
-        </div>
-        <div class="location-detail">
-          <span class="location-detail-icon">📞</span>
-          <div>
-            <div class="location-detail-label">Reservas</div>
-            <div class="location-detail-value">+34 952 000 142<br>reservas@hotelcostaazul.es</div>
-          </div>
-        </div>
-        <div class="location-detail">
-          <span class="location-detail-icon">🕐</span>
-          <div>
-            <div class="location-detail-label">Check-in / Check-out</div>
-            <div class="location-detail-value">Entrada: 15:00 h<br>Salida: 12:00 h</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="location-map">
-      <iframe
-        class="map-iframe"
-        src="https://www.openstreetmap.org/export/embed.html?bbox=-4.9500%2C36.4900%2C-4.8700%2C36.5300&layer=mapnik&marker=36.510%2C-4.910"
-        allowfullscreen
-        loading="lazy"
-        title="Ubicación Hotel Costa Azul"
-      ></iframe>
-    </div>
-  </div>
-</section>
-
-<!-- BOOKING SECTION -->
-<section class="booking-section" id="reserva">
-  <div class="container">
-    <div class="booking-section-inner">
-      <div class="booking-section-text reveal">
-        <span class="section-tag">Reserva directa</span>
-        <h2 class="section-title">Asegura tu<br><em>estancia</em> ideal</h2>
-        <div class="section-line"></div>
-        <p class="section-desc">Reserve directamente y disfrute de las mejores tarifas garantizadas, plus de bienvenida y upgrades de habitación sujetos a disponibilidad.</p>
-        <div class="booking-perks">
-          <div class="booking-perk">Mejor precio garantizado — sin comisiones</div>
-          <div class="booking-perk">Cancelación gratuita hasta 48 horas antes</div>
-          <div class="booking-perk">Desayuno incluido en reservas directas</div>
-          <div class="booking-perk">Early check-in y late check-out sin cargo</div>
-          <div class="booking-perk">Detalle de bienvenida en su habitación</div>
-          <div class="booking-perk">Acceso prioritario al spa con reserva anticipada</div>
-        </div>
-      </div>
-      <div class="booking-form reveal">
-        <h3 class="form-title">Solicitar reserva</h3>
-        <p class="form-subtitle">Respuesta garantizada en menos de 2 horas</p>
+      <form class="reservas-form reveal" id="reservasForm" novalidate>
         <div class="form-row">
           <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" placeholder="Su nombre">
+            <label for="nombre">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+            <span class="form-error" id="err-nombre"></span>
           </div>
           <div class="form-group">
-            <label>Apellidos</label>
-            <input type="text" placeholder="Sus apellidos">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Correo electrónico</label>
-          <input type="email" placeholder="correo@ejemplo.com">
-        </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label>Fecha de llegada</label>
-            <input type="date">
-          </div>
-          <div class="form-group">
-            <label>Fecha de salida</label>
-            <input type="date">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+            <span class="form-error" id="err-email"></span>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label>Tipo de habitación</label>
-            <select>
-              <option>Suite Mediterránea</option>
-              <option>Suite Panorámica</option>
-              <option>Royal Suite</option>
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000" required />
+            <span class="form-error" id="err-telefono"></span>
+          </div>
+          <div class="form-group">
+            <label for="personas">Número de personas</label>
+            <select id="personas" name="personas" required>
+              <option value="" disabled selected>Seleccionar</option>
+              <option value="1">1 persona</option>
+              <option value="2">2 personas</option>
+              <option value="3">3 personas</option>
+              <option value="4">4 personas</option>
+              <option value="5">5 personas</option>
+              <option value="6">6 personas</option>
+              <option value="7">7 personas</option>
+              <option value="8">8 personas</option>
+              <option value="9+">9 o más</option>
             </select>
+            <span class="form-error" id="err-personas"></span>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" name="fecha" required />
+            <span class="form-error" id="err-fecha"></span>
           </div>
           <div class="form-group">
-            <label>Huéspedes</label>
-            <select>
-              <option>1 adulto</option>
-              <option>2 adultos</option>
-              <option>2 adultos + 1 niño</option>
+            <label for="hora">Turno</label>
+            <select id="hora" name="hora" required>
+              <option value="" disabled selected>Seleccionar</option>
+              <option value="comida">Comida · 13:30</option>
+              <option value="cena">Cena · 20:30</option>
+              <option value="cena-tard">Cena tardía · 22:00</option>
             </select>
+            <span class="form-error" id="err-hora"></span>
           </div>
         </div>
-        <div class="form-group">
-          <label>Peticiones especiales</label>
-          <textarea placeholder="Alergias, celebraciones, preferencias..."></textarea>
+        <div class="form-group form-group--full">
+          <label for="notas">Peticiones especiales (opcional)</label>
+          <textarea id="notas" name="notas" rows="3" placeholder="Alergias, celebraciones, preferencias de mesa..."></textarea>
         </div>
-        <button class="form-submit" onclick="submitForm()">Solicitar disponibilidad →</button>
-        <p class="form-note">🔒 Sus datos están protegidos. No compartimos información con terceros.</p>
-      </div>
+        <button type="submit" class="btn btn-gold btn--submit">
+          <span class="btn-text">Confirmar reserva</span>
+          <span class="btn-spinner" id="btnSpinner"></span>
+        </button>
+        <div class="form-success" id="formSuccess">
+          <span>✦</span> ¡Reserva recibida! Nos pondremos en contacto en menos de 2 horas.
+        </div>
+      </form>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer">
     <div class="footer-top">
-      <div>
-        <span class="footer-brand-name">Hotel Costa Azul</span>
-        <span class="footer-brand-sub">Lujo · Mar · Experiencia</span>
-        <p class="footer-brand-desc">Desde 2001, creando momentos únicos en el Mediterráneo. Un refugio de elegancia donde cada estancia se convierte en un recuerdo para siempre.</p>
+      <div class="footer-brand">
+        <p class="footer-logo">
+          <span class="logo-ornament">✦</span> La Brasa <span class="logo-ornament">✦</span>
+        </p>
+        <p class="footer-tagline">Alta cocina a la brasa desde 1998</p>
         <div class="footer-social">
-          <a href="#" aria-label="Instagram">ig</a>
-          <a href="#" aria-label="Facebook">fb</a>
-          <a href="#" aria-label="Twitter">tw</a>
-          <a href="#" aria-label="LinkedIn">in</a>
-          <a href="#" aria-label="YouTube">yt</a>
-        </div>
-        <div class="footer-awards" style="margin-top: 2rem;">
-          <div class="footer-award">
-            <span class="footer-award-icon">🏆</span>
-            <div class="footer-award-text">WTA 2024</div>
-          </div>
-          <div class="footer-award">
-            <span class="footer-award-icon">⭐</span>
-            <div class="footer-award-text">Forbes 5★</div>
-          </div>
-          <div class="footer-award">
-            <span class="footer-award-icon">🌿</span>
-            <div class="footer-award-text">Green Globe</div>
-          </div>
-          <div class="footer-award">
-            <span class="footer-award-icon">💎</span>
-            <div class="footer-award-text">Condé Nast</div>
-          </div>
+          <a href="#" aria-label="Instagram" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" aria-label="TripAdvisor" class="social-link">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          </a>
         </div>
       </div>
-      <div>
-        <h4 class="footer-col-title">El hotel</h4>
-        <ul class="footer-links">
-          <li><a href="#">Sobre nosotros</a></li>
-          <li><a href="#habitaciones">Habitaciones & Suites</a></li>
-          <li><a href="#servicios">Servicios</a></li>
-          <li><a href="#spa">Spa & Wellness</a></li>
-          <li><a href="#">Restaurante</a></li>
-          <li><a href="#">Eventos & Bodas</a></li>
-          <li><a href="#">Galería</a></li>
+      <div class="footer-nav">
+        <h4 class="footer-title">Navegar</h4>
+        <ul>
+          <li><a href="#historia">Nuestra historia</a></li>
+          <li><a href="#carta">La carta</a></li>
+          <li><a href="#galeria">Galería</a></li>
+          <li><a href="#opiniones">Opiniones</a></li>
+          <li><a href="#reservas">Reservar mesa</a></li>
         </ul>
       </div>
-      <div>
-        <h4 class="footer-col-title">Información</h4>
-        <ul class="footer-links">
-          <li><a href="#">Ofertas especiales</a></li>
-          <li><a href="#">Programa de fidelidad</a></li>
-          <li><a href="#">Políticas del hotel</a></li>
-          <li><a href="#">Preguntas frecuentes</a></li>
-          <li><a href="#">Sostenibilidad</a></li>
-          <li><a href="#">Prensa & Media</a></li>
-          <li><a href="#">Trabaja con nosotros</a></li>
+      <div class="footer-nav">
+        <h4 class="footer-title">Horario</h4>
+        <ul class="footer-hours">
+          <li><span>Lunes</span><span class="closed">Cerrado</span></li>
+          <li><span>Martes – Viernes</span><span>13:30 · 20:30</span></li>
+          <li><span>Sábado</span><span>13:30 · 23:00</span></li>
+          <li><span>Domingo</span><span>13:30 · 17:00</span></li>
         </ul>
       </div>
-      <div>
-        <h4 class="footer-col-title">Contacto</h4>
-        <div class="footer-contact-item">
-          <span class="footer-contact-icon">📍</span>
-          <span>Paseo Marítimo, 142<br>Marbella, Málaga 29600</span>
-        </div>
-        <div class="footer-contact-item">
-          <span class="footer-contact-icon">📞</span>
-          <span>+34 952 000 142</span>
-        </div>
-        <div class="footer-contact-item">
-          <span class="footer-contact-icon">📧</span>
-          <span>reservas@hotelcostaazul.es</span>
-        </div>
-        <div class="footer-contact-item">
-          <span class="footer-contact-icon">🕐</span>
-          <span>Recepción 24/7</span>
-        </div>
-        <div style="margin-top: 1.5rem;">
-          <h4 class="footer-col-title">Newsletter</h4>
-          <div style="display: flex; gap: 0;">
-            <input
-              type="email"
-              placeholder="Su email"
-              style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-right: none; padding: 0.7rem 1rem; font-family: var(--font-sans); font-size: 0.78rem; color: white; outline: none; flex: 1;"
-            >
-            <button style="background: var(--gold); border: none; padding: 0.7rem 1rem; color: var(--navy); font-size: 0.7rem; cursor: pointer; transition: var(--transition);" onmouseover="this.style.background='#E8D5B0'" onmouseout="this.style.background='var(--gold)'">→</button>
-          </div>
-        </div>
+      <div class="footer-nav">
+        <h4 class="footer-title">Contacto</h4>
+        <ul>
+          <li>Calle del Fuego, 14</li>
+          <li>Madrid, 28004</li>
+          <li><a href="tel:+34914567890">+34 91 456 78 90</a></li>
+          <li><a href="mailto:hola@labrasa.es">hola@labrasa.es</a></li>
+        </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-bottom-text">© 2025 Hotel Costa Azul. Todos los derechos reservados.</p>
-      <div class="footer-bottom-links">
-        <a href="#">Aviso legal</a>
-        <a href="#">Privacidad</a>
-        <a href="#">Cookies</a>
-        <a href="#">Accesibilidad</a>
-      </div>
+      <p>© 2025 La Brasa · Todos los derechos reservados</p>
+      <p><a href="#">Aviso legal</a> · <a href="#">Política de privacidad</a> · <a href="#">Cookies</a></p>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
-  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
-  <img src="" alt="Galería" id="lightboxImg">
-</div>
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">↑</button>
 
-<!-- FLOATING CTA -->
-<a href="#reserva" class="floating-cta" id="floatingCta">
-  🛎 Reservar ahora
-</a>
-
-<script>
-  // Navbar scroll
-  const navbar = document.getElementById('navbar');
-  const floatingCta = document.getElementById('floatingCta');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 80) {
-      navbar.classList.add('scrolled');
-      floatingCta.classList.add('visible');
-    } else {
-      navbar.classList.remove('scrolled');
-      floatingCta.classList.remove('visible');
-    }
-  });
-
-  // Mobile menu
-  function toggleMenu() {
-    document.getElementById('mobileMenu').classList.toggle('open');
-  }
-
-  // Scroll animations
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
-
-  // Lightbox
-  function openLightbox(src) {
-    document.getElementById('lightboxImg').src = src;
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeLightbox();
-  });
-
-  // Rooms slider (simple toggle)
-  let roomsOffset = 0;
-  function scrollRooms(dir) {
-    const track = document.getElementById('roomsTrack');
-    const cards = track.querySelectorAll('.room-card');
-    if (window.innerWidth > 900) return;
-    roomsOffset = Math.max(0, Math.min(cards.length - 1, roomsOffset + dir));
-    const cardWidth = cards[0].offsetWidth + 2;
-    track.style.transform = `translateX(-${roomsOffset * cardWidth}px)`;
-  }
-
-  // Dates: set defaults
-  const today = new Date();
-  const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
-  const nextWeek = new Date(today); nextWeek.setDate(today.getDate() + 7);
-  const fmt = d => d.toISOString().split('T')[0];
-  document.querySelectorAll('input[type="date"]').forEach((inp, i) => {
-    inp.value = i % 2 === 0 ? fmt(nextWeek) : fmt(new Date(nextWeek.getTime() + 3*86400000));
-  });
-
-  // Scroll to reserva
-  function scrollToReserva() {
-    document.getElementById('reserva').scrollIntoView({ behavior: 'smooth' });
-  }
-
-  // Form submit
-  function submitForm() {
-    const btn = document.querySelector('.form-submit');
-    btn.textContent = '✓ Solicitud enviada — Le contactamos pronto';
-    btn.style.background = '#2D7D3A';
-    btn.style.color = 'white';
-    btn.disabled = true;
-  }
-
-  // Rooms track: make it scroll-able on mobile
-  const roomsTrack = document.getElementById('roomsTrack');
-  if (window.innerWidth <= 900) {
-    roomsTrack.style.display = 'flex';
-    roomsTrack.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
-    roomsTrack.querySelectorAll('.room-card').forEach(c => {
-      c.style.minWidth = 'calc(100vw - 3rem)';
-      c.style.flexShrink = '0';
-    });
-  }
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
